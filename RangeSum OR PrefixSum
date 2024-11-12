@@ -94,3 +94,28 @@ public class Solution {
     }
 }
 
+
+Approach 3: TimeComplexity O(M+N)
+public class Solution {
+    public long[] rangeSum(int[] A, int[][] B) {
+        // Calculate prefix sum in O(N)
+        long[] PFS = new long[A.length];
+        PFS[0] = A[0];  // First element
+        for(int i=1; i<A.length; i++) {
+            PFS[i] = PFS[i-1] + A[i];  // Add current to previous sum
+        }
+
+        // Handle queries in O(M)
+        long[] result = new long[B.length];
+        for(int i=0; i<B.length; i++) {
+            int L = B[i][0];
+            int R = B[i][1];
+            if(L == 0) 
+                result[i] = PFS[R];
+            else 
+                result[i] = PFS[R] - PFS[L-1];
+        }
+        return result;
+    }
+}
+
