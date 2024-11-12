@@ -1,0 +1,63 @@
+
+
+Problem Description
+Given an array, arr[] of size N, the task is to find the count of array indices such that removing an element from these indices makes the sum of even-indexed and odd-indexed array elements equal.
+
+Problem Constraints
+1 <= N <= 105
+-105 <= A[i] <= 105
+Sum of all elements of A <= 109
+
+Input Format
+First argument contains an array A of integers of size N
+Output Format
+Return the count of array indices such that removing an element from these indices makes the sum of even-indexed and odd-indexed array elements equal.
+
+Example Input
+Input 1:
+A = [2, 1, 6, 4]
+Input 2:
+A = [1, 1, 1]
+
+Example Output
+Output 1:
+1
+Output 2:
+3
+
+Solution:
+public class Solution {
+    public int solve(int[] A) {
+        int[] PFSE = new int[A.length];
+        int[] PFSO = new int[A.length];
+        PFSE[0] = A[0];
+        PFSO[0] = 0;
+        for(int i=1; i<A.length;i++){
+            if(i%2 == 0){
+                PFSE[i] = PFSE[i-1]+A[i];
+                PFSO[i] = PFSO[i-1];
+            }
+            else{
+                PFSO[i] = PFSO[i-1]+A[i];
+                PFSE[i] = PFSE[i-1];
+            }
+        }
+        int count = 0;
+        int n=A.length-1;
+        for(int j=0; j<=n; j++){
+            int SE, SO;
+            if(j==0){
+                SE = PFSO[n]-PFSO[0];
+                SO = PFSE[n]-PFSE[0];
+            }
+            else{
+                SE = PFSE[j-1]+PFSO[n]-PFSO[j];
+                SO = PFSO[j-1]+PFSE[n]-PFSE[j];
+            }
+            if(SE == SO){
+                count++;
+            }
+        }
+        return count;
+    }
+}
