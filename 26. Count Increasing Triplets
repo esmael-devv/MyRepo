@@ -31,7 +31,7 @@ public class Solution {
                     left++;
                 }
             }
-            for(int k=j; k<A.length; k++){
+            for(int k=j+1; k<A.length; k++){
                 if(A[j] < A[k]){
                     right++;
                 }
